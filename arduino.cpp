@@ -1,3 +1,8 @@
+/*
+	Author: Siman Marius Sorin
+	All intellectual right reserved
+	You are allow to use this code only if you specify the source
+*/
 #include <Main.h>
 #include <Debug.h>
 #include <Control.h>
@@ -7,7 +12,7 @@
 boolean gMap[MAP_SIZE][MAP_SIZE];
 Position gCurrentPosition;
 
-void setupDebug()
+void SetupDebug()
 {
 #ifdef _DEBUG
 	Debug::Active(true);
@@ -23,16 +28,18 @@ void setup()
 {
 	Serial.println("Start setup.");
  	Serial.begin(9600);
- 	setupDebug();
+ 	
+ 	SetupDebug();
  	Debug::Println("Debug ready.");
- 	delay(2 * SECOND);
+ 	
+ 	SetupMotors();
+ 	Debug::Println("Motors ready.");
 
  	gCurrentPosition.x = CENTER;
  	gCurrentPosition.y = CENTER;
 
- 	
 
- 	Serial.println("Program starts in 5 seconds.");
+ 	Debug::Println("Program starts in 5 seconds.");
  	delay(5 * SECOND);
 }
 
@@ -40,8 +47,10 @@ void setup()
 	Check if i found the room border
 	Time: O(MAP_SIZE / 2)
 */
-boolean CheckRoomMargin()
+boolean CheckRoomBorder()
 {
+	Debug::Println(" -> CheckRoomMargin");
+
 	boolean onTheLine = false;
 	int intersections = 0;
 	int position = CENTER + 1;
@@ -72,11 +81,15 @@ boolean CheckRoomMargin()
 	}
 
 	Debug::Println(intersections);
+
+	Debug::Println(" <- CheckRoomMargin");
 	return 1 == (intersections % 2);
 }
 
 void SurroundObject()
 {
+	Debug::Println(" -> SurroundObject");
+
 	Position begin = gCurrentPosition;
 	TurnRight();
 
@@ -101,11 +114,20 @@ void SurroundObject()
 			TurnRight();
 		}
 	}while(begin != gCurrentPosition);
+
+	Debug::Println(" <- SurroundObject");
+}
+
+void FindRoomBorder()
+{
+	Debug::Println(" -> FindRoomBorder");
+
+
+	Debug::Println(" <- FindRoomBorder");
 }
 
 void loop() 
 {
 	Serial.println("Result of CheckRoomMargin test: ");
-	Serial.print(CheckRoomMargin());
 	delay(10000);
 }

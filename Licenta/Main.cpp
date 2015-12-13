@@ -1,3 +1,8 @@
+/*
+	Author: Siman Marius Sorin
+	All intellectual right reserved
+	You are allow to use this code only if you specify the source
+*/
 #include "Main.h"
 
 // prefix ++ for Direction
