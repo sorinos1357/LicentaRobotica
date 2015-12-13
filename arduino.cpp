@@ -24,11 +24,13 @@ void setup()
 	Serial.println("Start setup.");
  	Serial.begin(9600);
  	setupDebug();
- 	Serial.println("Debug ready.");
+ 	Debug::Println("Debug ready.");
  	delay(2 * SECOND);
 
  	gCurrentPosition.x = CENTER;
  	gCurrentPosition.y = CENTER;
+
+ 	
 
  	Serial.println("Program starts in 5 seconds.");
  	delay(5 * SECOND);
@@ -99,7 +101,6 @@ void SurroundObject()
 			TurnRight();
 		}
 	}while(begin != gCurrentPosition);
-
 }
 
 void loop() 

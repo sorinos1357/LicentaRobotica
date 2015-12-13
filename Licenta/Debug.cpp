@@ -48,3 +48,13 @@ void Debug::Println(int i)
 
 	Serial.println(i);
 }
+
+void Debug::Println(const char* line)
+{
+	if(!m_Active)
+	{
+		return;
+	}
+
+	Serial.println(line);
+}

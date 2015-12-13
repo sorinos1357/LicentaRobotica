@@ -10,5 +10,6 @@ void TurnRight();
 int DistanceFront();
 int DistanceLeft();
 int DistanceRight();
+void SetupMotors();
 
 #endif

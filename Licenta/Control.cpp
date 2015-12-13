@@ -2,6 +2,12 @@
 #include "Control.h"
 #include "Main.h"
 
+const int MOTOR1_PIN1 				= 3;
+const int MOTOR1_PIN2 				= 5;
+
+const int MOTOR2_PIN1 				= 6;
+const int MOTOR2_PIN2 				= 9;
+
 void MoveForward()
 {
 
@@ -36,3 +42,36 @@ int DistanceRight()
 {
 	return 0;
 }
+
+void SetupMotors()
+{
+	pinMode(MOTOR1_PIN1, OUTPUT);
+ 	pinMode(MOTOR1_PIN2, OUTPUT);
+ 	pinMode(MOTOR2_PIN1, OUTPUT);
+ 	pinMode(MOTOR2_PIN2, OUTPUT);
+}
+
+/*void go(int speedLeft, int speedRight)
+{
+	if (speedLeft > 0)
+	{
+   		analogWrite(MOTOR1_PIN1, speedLeft);
+   		analogWrite(MOTOR1_PIN2, 0);
+ 	}
+ 	else
+ 	{
+   		analogWrite(MOTOR1_PIN1, 0);
+   		analogWrite(MOTOR1_PIN2, -speedLeft);
+ 	}
+
+ 	if (speedRight > 0)
+ 	{
+		analogWrite(MOTOR2_PIN1, speedRight);
+   		analogWrite(MOTOR2_PIN2, 0);
+ 	}
+ 	else 
+ 	{
+   		analogWrite(MOTOR2_PIN1, 0);
+   		analogWrite(MOTOR2_PIN2, -speedRight);
+ 	}
+}*/

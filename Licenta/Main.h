@@ -3,9 +3,9 @@
 
 #include "Arduino.h"
 
-#define 	MAP_SIZE				20
-#define 	CENTER 					MAP_SIZE / 2
-#define		SECOND					1000
+const int 	MAP_SIZE 				= 20;
+const int 	CENTER 	 				= MAP_SIZE / 2;
+const int	SECOND					= 1000;
 
 enum Direction
 {
