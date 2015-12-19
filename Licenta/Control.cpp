@@ -56,6 +56,14 @@ void SetupMotors()
  	pinMode(MOTOR2_PIN2, OUTPUT);
 }
 
+void Turn(__in const Direction direction)
+{
+	 while(direction != gCurrentPosition.direction)
+	 {
+	 	TurnRight();
+	 }
+}
+
 /*void go(int speedLeft, int speedRight)
 {
 	if (speedLeft > 0)

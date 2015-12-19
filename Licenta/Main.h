@@ -8,6 +8,10 @@
 
 #include "Arduino.h"
 
+#define __in 
+#define __out 
+#define __in_opt 
+
 const int 	MAP_SIZE 				= 20;
 const int 	CENTER 	 				= MAP_SIZE / 2;
 const int	SECOND					= 1000;
@@ -48,42 +52,13 @@ struct Position : public Point
 {
 	Direction direction;
 
-	Position(int x = 0, int y = 0, Direction dir = Direction::Up):
-		Point(x, y),
-		direction(dir)
-	{}
+	Position(int x = 0, int y = 0, Direction dir = Direction::Up);
+	Position(const Position &other);
+	
+	const Position& operator=(const Position& other);
+	boolean operator==(const Position& other) const;
 
-	Position(const Position &other):
-		Point(other.x, other.y)
-	{
-		this->direction = other.direction;
-	}
-
-	const Position& operator=(const Position& other)
-	{
-		this->x = other.x;
-		this->y = other.y;
-		this->direction = other.direction;
-		return other;
-	}
-
-	// don't care about direction
-	boolean operator==(const Position& other)
-	{
-		if(this->x == other.x && this->y == other.y)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	boolean operator!=(const Position& other)
-	{
-		return !(*this == other);
-	}
+	boolean operator!=(const Position& other) const;
 };
 
 extern boolean gMap[MAP_SIZE][MAP_SIZE];

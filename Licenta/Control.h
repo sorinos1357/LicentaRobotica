@@ -7,6 +7,7 @@
 #define CONTROL_H
 
 #include "Arduino.h"
+#include "Main.h"
 
 void MoveForward();
 void MoveBackward();
@@ -16,5 +17,6 @@ int DistanceFront();
 int DistanceLeft();
 int DistanceRight();
 void SetupMotors();
+void Turn(__in const Direction direction);
 
 #endif

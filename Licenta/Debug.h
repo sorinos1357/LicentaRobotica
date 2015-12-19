@@ -15,6 +15,7 @@ public:
 
 	static void Active(boolean);
 	static void Print(int);
+	static void Print(const char*);
 	static void Println(int);
 	static void Println(const char*);
 	static void PrintMap();

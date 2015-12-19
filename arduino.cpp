@@ -9,9 +9,6 @@
 
 #define _DEBUG
 
-boolean gMap[MAP_SIZE][MAP_SIZE];
-Position gCurrentPosition;
-
 void SetupDebug()
 {
 #ifdef _DEBUG
@@ -37,6 +34,7 @@ void setup()
 
  	gCurrentPosition.x = CENTER;
  	gCurrentPosition.y = CENTER;
+ 	gCurrentPosition.direction = Direction::Up;
 
 
  	Debug::Println("Program starts in 5 seconds.");
@@ -44,12 +42,12 @@ void setup()
 }
 
 /*
-	Check if i found the room border
+	Return true if i found the room border after i surround an object
 	Time: O(MAP_SIZE / 2)
 */
 boolean CheckRoomBorder()
 {
-	Debug::Println(" -> CheckRoomMargin");
+	Debug::Println(" -> CheckRoomBorder");
 
 	boolean onTheLine = false;
 	int intersections = 0;
@@ -80,17 +78,21 @@ boolean CheckRoomBorder()
 		++position;
 	}
 
+	Debug::Print("Intersections: ");
 	Debug::Println(intersections);
 
-	Debug::Println(" <- CheckRoomMargin");
+	Debug::Println(" <- CheckRoomBorder");
 	return 1 == (intersections % 2);
 }
 
-void SurroundObject()
+/*
+	Move the robot to surround the object in front of him in search for the targetPoint
+	and return the topmost point of the object
+*/
+void SurroundObjectToPoint(__in const Position& targetPosition, __out Position& topmostPosition)
 {
-	Debug::Println(" -> SurroundObject");
+	Debug::Println(" -> SurroundObjectToPoint");
 
-	Position begin = gCurrentPosition;
 	TurnRight();
 
 	if(-1 != DistanceRight())
@@ -113,21 +115,52 @@ void SurroundObject()
 		{
 			TurnRight();
 		}
-	}while(begin != gCurrentPosition);
 
-	Debug::Println(" <- SurroundObject");
+		if(gCurrentPosition.y < topmostPosition.y)
+		{
+			topmostPosition = gCurrentPosition;
+		}
+	}while(targetPosition != gCurrentPosition);
+
+	Debug::Println(" <- SurroundObjectToPoint");
+}
+
+/*
+	Move the robot as up as possible
+*/
+void GoUp()
+{
+	Turn(Direction::Up);
+	while(-1 != DistanceFront())
+	{
+		MoveForward();
+	}
 }
 
 void FindRoomBorder()
 {
 	Debug::Println(" -> FindRoomBorder");
 
+	Position topPoint;
+	do
+	{
+		GoUp();
+		SurroundObjectToPoint(gCurrentPosition, topPoint);
+		
+		if(true == CheckRoomBorder())
+		{
+			break;
+		}
 
+		SurroundObjectToPoint(topPoint, topPoint);
+
+	}while(true);
+	
 	Debug::Println(" <- FindRoomBorder");
 }
 
 void loop() 
 {
-	Serial.println("Result of CheckRoomMargin test: ");
+	Serial.println("Result of CheckRoomBorder test: ");
 	delay(10000);
 }
